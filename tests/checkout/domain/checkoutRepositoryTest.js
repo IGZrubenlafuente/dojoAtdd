@@ -18,6 +18,12 @@ describe('The Checkout Repository', () => {
                 value: 0,
                 currency: 'EUR'
             }
+        },
+        checkoutWith1Item: {
+            total: {
+                value: 5.23,
+                currency: 'EUR'
+            }
         }
     };
 
@@ -49,4 +55,15 @@ describe('The Checkout Repository', () => {
 
         done();
     });
+
+    it('Should add an item to a existing checkout', done => {
+        const id = fixture.id;
+        const checkout = checkoutRepository.create(id)
+        const checkoutWith1Item = checkoutRepository.addItem(id, "Aceite");
+
+        checkoutWith1Item.should.deep.equal(fixture.checkoutWith1Item);
+
+        done();
+    });
+
 });
