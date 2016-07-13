@@ -33,6 +33,8 @@ function clear() {
 }
 
 function addItem(id, itemName){
-    checkoutMap[id].total.value += itemPrices[itemName];
+    if(checkoutMap[id] !== undefined){
+        checkoutMap[id].total.value += itemPrices[itemName];
+    }
     return checkoutMap[id];
 }

@@ -13,6 +13,8 @@ describe('The Checkout Repository', () => {
 
     const fixture = {
         id: 1,
+        nonexistingId: 2,
+        itemName: "Aceite",
         checkout: {
             total: {
                 value: 0,
@@ -56,10 +58,21 @@ describe('The Checkout Repository', () => {
         done();
     });
 
-    it('Should add an item to a existing checkout', done => {
+    it('Should retrieve an undefined checkout when adding an item to a non-existing checkout', done => {
+        const id = fixture.nonexistingId;
+        const itemName = fixture.itemName;
+        const checkout = checkoutRepository.addItem(id, itemName);
+
+        expect(checkout).to.be.an('undefined');
+
+        done();
+    });
+
+    it('Should add an item to an empty checkout and retrieve the checkout with the new total', done => {
         const id = fixture.id;
         const checkout = checkoutRepository.create(id)
-        const checkoutWith1Item = checkoutRepository.addItem(id, "Aceite");
+        const itemName = fixture.itemName;
+        const checkoutWith1Item = checkoutRepository.addItem(id, itemName);
 
         checkoutWith1Item.should.deep.equal(fixture.checkoutWith1Item);
 
